@@ -1,4 +1,4 @@
-package injection
+package goinjection
 
 import (
 	"reflect"
@@ -10,18 +10,6 @@ import (
 	"os"
 
 )
-
-type ApplicationSetup interface {
-	DoSetup() error
-}
-
-type ApplicationShutdown interface {
-	Shutdown()
-}
-
-type ApplicationHealthCheck interface {
-	CheckHealth() error
-}
 
 
 type Application struct {
@@ -39,7 +27,6 @@ func NewApplication() *Application{
 
 func (this *Application)ReadConfig(name string) error {
 
-
 	raw, err := ioutil.ReadFile(name)
 
 	if (err != nil) {
@@ -56,9 +43,7 @@ func (this *Application)ReadConfig(name string) error {
 }
 
 func (this *Application)AddDefaultValue(name string,value interface{}) {
-
 	this.config[name] = value
-
 }
 
 func (this *Application)AddService(service interface{}) error{
@@ -87,7 +72,7 @@ func (this *Application) fieldValue(field reflect.StructField) (interface{},erro
 			}
 		} else if field.Type.Kind() == reflect.Struct{
 
-			return nil,errors.New("Injected type muct not be a struct (use pointer or interface)")
+			return nil,errors.New("Injected type must not be a struct (use pointer or interface)")
 		} else {
 			if serviceType.Elem() == field.Type.Elem() {
 				return service,nil
@@ -131,17 +116,7 @@ func (this *Application) lookupValue(key string) interface{} {
 }
 
 
-func (this *Application) CheckHealth() error{
-	for _,service := range this.services {
-		if check, ok := interface{}(service).(ApplicationHealthCheck); ok {
-			if err := check.CheckHealth();err != nil {
-				return err
-			}
 
-		}
-	}
-	return nil
-}
 
 const INJECTTAG = "inject"
 const INJECTOPTINALTAG = "inject"

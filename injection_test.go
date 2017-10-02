@@ -1,4 +1,4 @@
-package injection
+package goinjection
 
 import (
 	"testing"
