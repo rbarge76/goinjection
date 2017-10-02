@@ -7,4 +7,3 @@ type ApplicationSetup interface {
 type ApplicationShutdown interface {
 	Shutdown()
 }
-

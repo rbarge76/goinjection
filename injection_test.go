@@ -2,14 +2,12 @@ package goinjection
 
 import (
 	"testing"
-
 )
 
-
 type testObject struct {
-	DummyValue string `injectValue:test`
-	DummyIntValue int `injectValue:testInt`
-	DummyIntBool bool `injectValue:testBool`
+	DummyValue    string `injectValue:test`
+	DummyIntValue int    `injectValue:testInt`
+	DummyIntBool  bool   `injectValue:testBool`
 }
 
 type testSecondObject struct {
@@ -20,9 +18,9 @@ func TestBasicInjection(t *testing.T) {
 
 	app := NewApplication()
 
-	app.AddDefaultValue("test","123")
-	app.AddDefaultValue("testInt",1)
-	app.AddDefaultValue("testBool",true)
+	app.AddDefaultValue("test", "123")
+	app.AddDefaultValue("testInt", 1)
+	app.AddDefaultValue("testBool", true)
 
 	test := &testObject{}
 
@@ -42,7 +40,7 @@ func TestBasicInjection(t *testing.T) {
 		t.Fail()
 	}
 
-	if !test.DummyIntBool  {
+	if !test.DummyIntBool {
 		t.Fail()
 	}
 
@@ -52,9 +50,9 @@ func TestBasicInjectionWrongType(t *testing.T) {
 
 	app := NewApplication()
 
-	app.AddDefaultValue("test","123")
-	app.AddDefaultValue("testInt","Tree")
-	app.AddDefaultValue("testBool",true)
+	app.AddDefaultValue("test", "123")
+	app.AddDefaultValue("testInt", "Tree")
+	app.AddDefaultValue("testBool", true)
 
 	test := &testObject{}
 
@@ -66,14 +64,13 @@ func TestBasicInjectionWrongType(t *testing.T) {
 		t.Fail()
 	}
 
-
 }
 
 func TestBasicObjectInjection(t *testing.T) {
 
 	app := NewApplication()
 
-	app.AddDefaultValue("test","123")
+	app.AddDefaultValue("test", "123")
 
 	test2 := &testSecondObject{}
 
@@ -88,14 +85,13 @@ func TestBasicObjectInjection(t *testing.T) {
 		t.Fail()
 	}
 
-
 }
 
 func TestNonePointerObjectInjection(t *testing.T) {
 
 	app := NewApplication()
 
-	app.AddDefaultValue("test","123")
+	app.AddDefaultValue("test", "123")
 
 	test2 := testSecondObject{}
 
@@ -109,6 +105,5 @@ func TestNonePointerObjectInjection(t *testing.T) {
 	if err != nil {
 		t.Fail()
 	}
-
 
 }
